@@ -1,6 +1,5 @@
 import Cart from "../../models/cart";
 import ConnectDB from "../../lib/mongodb"
-import product from "../../models/productSchema"
 
 ConnectDB();
 
@@ -11,14 +10,15 @@ export default async(req, res)=>{
          break;
          case "PUT":
          await addProduct(req, res)
-         break
+         break;
+        
     }
 }
 // fetching contents of cart
 const fetchCart= async(req, res)=>{
     try{
         const cart = await Cart.findOne({}).populate("products.product")
-        res.status(200).json(cart.products)
+        res.status(200).json(cart)
     }catch(error){
         return res.status(401).json({error})
     }
@@ -44,6 +44,23 @@ const addProduct = async(req, res)=>{
         )
     }
     res.status(200).json({message:'product added successfully'})
-      
+      }
 
-    }
+    // //   removing product from cart
+
+    // const removeProduct = async(req,res)=>{
+    //     const {productId} = req.query;
+    //     try{
+    //         const cart = await Cart.findOne({})
+    //         await Cart.findOneAndUpdate(
+    //             {_id:cart._id},{$pull:{products:{product:productId}}},
+    //             {new:true}
+    //             ).populate("products.product")
+    //             res.status(200).json({message:"removed from cart"})
+    //     }catch(error){
+    //         console.log(error);
+    //         res.status(403).send("something bad happened")
+    //     }
+
+       
+    // }

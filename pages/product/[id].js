@@ -45,6 +45,7 @@ const Product =({product})=>{
            })
            })
            const res2 = await res.json();
+           setQuantity("")
     
       }
     
