@@ -51,48 +51,51 @@ const Product =({product})=>{
     
    
     return(
-        <div className="bg-white">
-          <form></form>
+        <div className="bg-white max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         
 
         <div>
           
             <div key={product.id} className="group relative">
-              <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden  lg:h-80 lg:aspect-none">
-                <img
+              <div className="flex m-2 p-2 2xl:w-1/2 2xl:h-1/2">
+              <img
                   src={product.img}
                   alt={product.imageAlt}
-                  className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                  className="object-cover lg:w-50% lg:h-50% 2xl:w-1/3 2xl:h-3/2 2xl:rounded self-auto"
                 />
+                <p className="mt-1 text-md text-gray-500">{product.desc}</p>
               </div>
-              <div className="mt-4 flex justify-between">
+               
+             
+              <div className="mt-4 flex justify-between 2xl:w-1/3 2xl:h-1/3 2xl:rounded-sm">
                 <div>
                   <h3 className="text-xl text-gray-700">
                     {product.name}
                    </h3>
-                  <p className="mt-1 text-md text-gray-500">{product.desc}</p>
+                  
                 </div>
                 <p className="text-xl font-medium text-gray-900"> ${product.price}</p>
               </div>
-            </div>
-            <button onClick={addProduct} className="rounded-md bg-gray-800 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm m-4 p-3">Add to Cart</button>
-            
-            <button onClick={deleteProduct} className="rounded-md bg-gray-800 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm m-4 p-3">Delete Item</button>
-            <div>
-            <label htmlFor="email-address" className="sr-only">
-              Email address
+              <label  className="sr-only">
+              Quantity
             </label>
             <input
               onChange={quantityHandler}
               name="quantity"
               type="number"
               required
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="2xl:w-1/3 2xl:h-1/3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               placeholder="Enter quantity"
               min="1"
               value={quantity}
             />
+            </div>
+            <button onClick={addProduct} className="rounded-md bg-gray-800 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm m-4 p-3">Add to Cart</button>
+            
+            <button onClick={deleteProduct} className="rounded-md bg-gray-800 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm m-4 p-3">Delete Item</button>
+            <div>
+           
           </div>
          
         </div>

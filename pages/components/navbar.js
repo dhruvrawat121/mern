@@ -1,6 +1,14 @@
 import Link from "next/link"
+import { parseCookies } from "nookies";
 
 const Navbar=()=>{
+    const {token} = parseCookies();
+    let user = false;
+    if(token){
+        user = true
+    }else{
+        user = false
+    }
     return(
         <div className="text-xl text-gray-100 bg-gray-800 min-w-full min-h-full">
             <div className="flex justify-between">
