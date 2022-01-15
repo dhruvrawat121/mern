@@ -2,9 +2,10 @@ import Link from "next/link";
 import { useState } from "react";
 import BaseURL from "../lib/baseUrl"
 import { useRouter } from "next/router"; 
-import { useForm } from "react-hook-form";
-// for alert
+import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import { Alert } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 
@@ -19,7 +20,8 @@ const SignUp =()=>{
   const [email,setEmail]= useState('')
   const router = useRouter();
 
- const {handleSubmit, register, formState:{errors}}= useForm();
+  const [validated, setValidated] = useState(false);
+
 // All the Event Handlers
 
   const nameHandler=(e)=>{
@@ -36,6 +38,14 @@ const SignUp =()=>{
   }
   // submit Handler
   const submitHandler=async(e)=>{
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    setValidated(true);
+  
     const res = await fetch(`${BaseURL}/api/signUp`,{
       method:"POST",
       headers:{
@@ -55,7 +65,6 @@ const SignUp =()=>{
       <Alert variant="danger">{res2.message}</Alert>
     }else{
       <Alert variant="success">Success</Alert>
-      router.push("/logIn")
 
     }
     
@@ -74,92 +83,59 @@ const SignUp =()=>{
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your Account</h2>
          
         </div>
-        {/* FORM FOR SIGN UP */}
-        <form onSubmit={handleSubmit(submitHandler)} className="mt-8 space-y-6" action="#" method="POST">
-        <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div className="form-group">
-            <label htmlFor="name" className="sr-only">
-                Your Name:
-              </label>
-              <input onChange={nameHandler}
-                type="text"
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm form-control"
-                placeholder="Your Name"
-                {...register('name',{required:true})}
-
-              />
-              {/* check for name errors */}
-              {errors.name && 
-              <Alert variant="danger">
-                {errors.name &&errors.name.type==="required" && "Name is required"}
-              </Alert>
-              
-              }
-              </div>
-            <div className="form-group">
-            <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input onChange={emailHandler}
-                {...register("email",{required:true, pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/})}
-
-                id="email-address"
-                type="email"
-                className="rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm form-control"
-                placeholder="Email address"
-
-              />
-              {/* check for email errors */}
-              {errors.email && 
-              <Alert variant="danger">
-                {errors.email ?.type==="required" && <p>Email address is required</p>}
-                {errors.email ?.type==="pattern" && <p>Please provide a valid email Address</p>}
-              </Alert>
-              
-              }
-            </div>
-            <div className="form-group">
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input onChange={passwordHandler}
-                {...register("password",{required:true, minLength:8})}
-
-                type="password"
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm form-control"
-                placeholder="Password"
-              />
-                {/* check for password errors */}
-                {errors.password && 
-              <Alert variant="danger">
-                {errors.password ?.type==="required" && <p>Password is required</p>}
-                {errors.password ?.type==="minLength" && <p>Atleast 8 characters are required</p>}
-              </Alert>
-              
-              }
-            </div>
-          </div>
-
-          
-
-          <div className="form-group">
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-              </span>
-              Sign Up
-            </button>
-          </div>
-          <div className="text-sm">
-                <Link href="/logIn"><a className="font-medium text-indigo-600 hover:text-indigo-500">
-                 Already Have an Account. LogIn Instead?
-                </a>
-                </Link>
-              </div>
-        </form>
+        <Form noValidate validated={validated} onSubmit={submitHandler}>
+      <Col className="mb-3 2xl:w-3/4">
+        <Form.Group as={Col} md="4" controlId="validationCustom01" className="2xl:w-3/4">
+          <Form.Label>First name</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            placeholder="Please Enter your name"
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
+        
+        
+        <Form.Group as={Col} md="4" controlId="validationCustom01">
+          <Form.Label>Email Address</Form.Label>
+          <InputGroup hasValidation>
+            <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+            <Form.Control
+              type="email"
+              placeholder="Email Address"
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide valid email address.
+            </Form.Control.Feedback>
+          </InputGroup>
+        </Form.Group>
+        <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+          <Form.Label>Password</Form.Label>
+          <InputGroup hasValidation>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              aria-describedby="inputGroupPrepend"
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide valid email address.
+            </Form.Control.Feedback>
+          </InputGroup>
+        </Form.Group>
+      </Col>
+   
+      <Form.Group className="mb-3">
+        <Form.Check
+          required
+          label="Agree to terms and conditions"
+          feedback="You must agree before submitting."
+          feedbackType="invalid"
+        />
+      </Form.Group>
+      <Button type="submit">Submit form</Button>
+    </Form>
       </div>
     </div>
     )
