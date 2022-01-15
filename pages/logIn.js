@@ -37,10 +37,8 @@ const LogIn =()=>{
             }else{
               console.log(res2)
               cookie.set('token',res.token)
-              router.push('/accountPage')
             }
-            setEmail("")
-            setPassword("")
+           
 
           }
   return(

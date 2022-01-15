@@ -19,11 +19,12 @@ ConnectDB();
             }
             const matchPass= await bcrypt.compare(password, user.password)
             if(matchPass){
-               const token= jwt.sign({userId:user._id}, 
+               const token= jwt.sign(
+                        {userId:user._id}, 
                         process.env.JWT_SECRET,
                         {expiresIn: "1d"}
                )
-               res.status(201).json({token})
+               res.status(201).json({message:"login Successful"})
             }else{
                return res.status(202).json({message:"Either email or password don't match"})
 

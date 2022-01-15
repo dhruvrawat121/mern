@@ -16,7 +16,7 @@ export default async(req, res)=>{
              
              const user = await User.findOne({email})
              if(user){
-                 res.status(422).json({message:"That email is already used"})
+                 return res.status(422).json({message:"That email is already used"})
              }
                 const hashedPassword=await bcrypt.hash(password,12)
                 const newUser = await new User({
