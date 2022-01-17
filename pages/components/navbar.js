@@ -1,8 +1,10 @@
 import Link from "next/link"
 import { parseCookies } from "nookies";
-
+import { useSelector } from "react-redux";
 const Navbar=()=>{
     const {token} = parseCookies();
+    const isLogged = useSelector(state=>state.logIn)
+    console.log(isLogged)
     let user = false;
     if(token){
         user = true
@@ -18,6 +20,7 @@ const Navbar=()=>{
                     <li className="p-3"><Link href="/signUp"><a>New User? Sign Up</a></Link></li>
                     <li className="p-3"><Link href="/cart">Cart</Link></li>
                     <li className="p-3"><Link href="/newProduct">Create Product</Link></li>
+                    {isLogged ?<li className="p-3"><Link href="/logOut">LogOut</Link></li>:""}
                 </ul>
 
             </div>

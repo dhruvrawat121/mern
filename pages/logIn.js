@@ -5,17 +5,24 @@ import BaseURL from "../lib/baseUrl"
 import cookie from "js-cookie";
 import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useSelector, useDispatch } from "react-redux";
+import {loggedIn} from "../redux/actions/index"
 
 
 
 
 const LogIn =()=>{
-
-          const [email, setEmail]=useState('')
-          const[password, setPassword]= useState("")
           const router = useRouter();
+          // validation for form
           const [validated, setValidated] = useState(false);
+         // state and redux store
+          const [email, setEmail]=useState('')
+          const [password, setPassword]= useState("")
+          const {message} = useSelector(state=>state.message)
+          const dispatch = useDispatch()
+
+
+
       // Event Handlers
           const emailHandler=(e)=>{
             setEmail(e.target.value)
@@ -24,12 +31,12 @@ const LogIn =()=>{
           const passwordHandler=(e)=>{
             setPassword(e.target.value)
           }
-
+// logIn handler
           const logInHandler=async(e)=>{
             const form = e.currentTarget;
             if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
+                      e.preventDefault();
+                      e.stopPropagation();
                   }
 
             setValidated(true);
@@ -47,7 +54,7 @@ const LogIn =()=>{
               console.log(error)
             }else{
               console.log(res2)
-              cookie.set('token',res.token)
+              cookie.set('token',res.token);
             }
            
 
@@ -94,6 +101,13 @@ const LogIn =()=>{
                 </a>
               </Link>
             </div>
+            {message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {message}
+                </div>
+              </div>
+            )}
       </Form>
     </div>
   </div>
