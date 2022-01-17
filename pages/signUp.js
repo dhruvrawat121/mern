@@ -84,7 +84,7 @@ const SignUp =()=>{
          
         </div>
         <Form noValidate validated={validated} onSubmit={submitHandler}>
-      <Col className="mb-3 2xl:w-3/4">
+      <Col className="mb-3 2xl:w-3/4 flex col 2xl:items-center lg:items-center md:items-center sm:items-center">
         <Form.Group as={Col} md="4" controlId="validationCustom01" className="2xl:w-3/4">
           <Form.Label>First name</Form.Label>
           <Form.Control

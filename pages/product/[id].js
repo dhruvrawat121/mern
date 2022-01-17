@@ -51,59 +51,64 @@ const Product =({product})=>{
     
    
     return(
-        <div className="bg-white max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        
-
-        <div>
-          
-            <div key={product.id} className="group relative">
-              <div className="flex m-2 p-2 2xl:w-1/2 2xl:h-1/2">
-              <img
-                  src={product.img}
-                  alt={product.imageAlt}
-                  className="object-cover lg:w-50% lg:h-50% 2xl:w-1/3 2xl:h-3/2 2xl:rounded self-auto"
-                />
-                <p className="mt-1 text-md text-gray-500">{product.desc}</p>
-              </div>
-               
-             
-              <div className="mt-4 flex justify-between 2xl:w-1/3 2xl:h-1/3 2xl:rounded-sm">
-                <div>
-                  <h3 className="text-xl text-gray-700">
-                    {product.name}
-                   </h3>
-                  
-                </div>
-                <p className="text-xl font-medium text-gray-900"> ${product.price}</p>
-              </div>
-              <label  className="sr-only">
-              Quantity
-            </label>
-            <input
-              onChange={quantityHandler}
-              name="quantity"
-              type="number"
-              required
-              className="2xl:w-1/3 2xl:h-1/3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Enter quantity"
-              min="1"
-              value={quantity}
+      <div className="bg-white">
+      <div className="pt-6">
+        <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
+          <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
+            <img
+              src={product.img}
+              alt={product.imageAlt}
+              className="w-full h-full object-center object-cover"
             />
-            </div>
-            <button onClick={addProduct} className="rounded-md bg-gray-800 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm m-4 p-3">Add to Cart</button>
-            
-            <button onClick={deleteProduct} className="rounded-md bg-gray-800 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm m-4 p-3">Delete Item</button>
-            <div>
-           
           </div>
-         
+          <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+            <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
+              <img
+               src={product.img}
+               alt={product.imageAlt}
+                className="w-full h-full object-center object-cover"
+              />
+            </div>
+            <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
+              <img
+                 src={product.img}
+                 alt={product.imageAlt}
+                className="w-full h-full object-center object-cover"
+              />
+            </div>
+          </div>
+          <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
+            <img
+              src={product.img}
+              alt={product.imageAlt}
+              className="w-full h-full object-center object-cover"
+            />
+          </div>
         </div>
-      </div>
-
-      <Link href="/"><a>Back to the Home Page</a></Link>
+         {/* Product info */}
+        <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-2 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+          <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+              <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
+          </div>
+        <div className="w-100">
+        <button onClick={addProduct}
+              type="submit"
+              className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+              Add to bag
+          </button>
+        </div>
+          <div className="2xl:w-full xl:w-full place-items-center content-center 2xl:justify-items-center">
+            <h3 className="sr-only">Description</h3>
+            <p className="text-base text-gray-900">{product.desc}</p>
+        </div>
+          
+        </div >
+       
       
-    </div>
+        </div>
+            <Link href="/"><a>Back to the Home Page</a></Link>
+      </div>
     )
 
 }
@@ -129,3 +134,4 @@ export async function getStaticProps({params:{id}}) {
 
 
    export default Product;
+

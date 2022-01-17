@@ -10,11 +10,11 @@ export default function Home({data}) {
           {data.map((product) => (
             <div key={product.id} className="group relative">
               <div key={product.id} className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden lg:h-80 lg:aspect-none">
-              <img
+              <Link href={'/product/[id]'} as={`/product/${product._id}`} ><a className="text-gray-900 font-medium italic"><img
                   src={product.img}
                   alt={product.imageAlt}
                   className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-                />
+                /></a></Link>
               </div>
               <div  key={product.id} className="mt-4 flex justify-between">
                 <div  key={product.id}>
@@ -24,7 +24,7 @@ export default function Home({data}) {
                 </div>
                 <p className="text-sm font-medium text-gray-900"> ${product.price}</p>
               </div>
-              <Link href={'/product/[id]'} as={`/product/${product._id}`} ><a className="text-gray-900 font-medium italic">To Product Detail Page</a></Link>
+     
             </div>
           ))}
         </div>
