@@ -83,24 +83,25 @@ const SignUp =()=>{
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your Account</h2>
          
         </div>
-        <Form noValidate validated={validated} onSubmit={submitHandler}>
-      <Col className="mb-3 2xl:w-3/4 flex col 2xl:items-center lg:items-center md:items-center sm:items-center">
-        <Form.Group as={Col} md="4" controlId="validationCustom01" className="2xl:w-3/4">
+        <Form noValidate validated={validated} onSubmit={submitHandler} className="mt-8 space-y-6">
+        <Form.Group  md="4" controlId="" className="2xl:w-full">
           <Form.Label>First name</Form.Label>
-          <Form.Control
+          <Form.Control onChange={nameHandler}
             required
             type="text"
-            placeholder="Please Enter your name"
+            placeholder="Please Enter your name" className="w-full"
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+              Please enter your name.
+            </Form.Control.Feedback>
         </Form.Group>
         
         
-        <Form.Group as={Col} md="4" controlId="validationCustom01">
+        <Form.Group md="4" controlId="formBasicEmail">
           <Form.Label>Email Address</Form.Label>
           <InputGroup hasValidation>
-            <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-            <Form.Control
+            <Form.Control onChange={emailHandler}
               type="email"
               placeholder="Email Address"
               required
@@ -110,31 +111,31 @@ const SignUp =()=>{
             </Form.Control.Feedback>
           </InputGroup>
         </Form.Group>
-        <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+        <Form.Group  md="4" controlId='formBasicPassword'>
           <Form.Label>Password</Form.Label>
           <InputGroup hasValidation>
-            <Form.Control
+            <Form.Control onChange={passwordHandler}
               type="password"
               placeholder="Password"
               aria-describedby="inputGroupPrepend"
               required
             />
             <Form.Control.Feedback type="invalid">
-              Please provide valid email address.
+              Please provide valid password.
             </Form.Control.Feedback>
           </InputGroup>
         </Form.Group>
-      </Col>
+     
    
-      <Form.Group className="mb-3">
-        <Form.Check
-          required
-          label="Agree to terms and conditions"
-          feedback="You must agree before submitting."
-          feedbackType="invalid"
-        />
-      </Form.Group>
-      <Button type="submit">Submit form</Button>
+  
+      <Button type="submit">Sign Up!!</Button>
+      <div className="text-sm">
+              <Link href="/logIn">
+                <a className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Already have an account LogIn Instead?
+                </a>
+              </Link>
+            </div>
     </Form>
       </div>
     </div>

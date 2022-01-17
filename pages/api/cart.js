@@ -18,7 +18,7 @@ export default async(req, res)=>{
 const fetchCart= async(req, res)=>{
     try{
         const cart = await Cart.findOne({}).populate("products.product")
-        res.status(200).json(cart)
+        res.status(200).json({})
     }catch(error){
         return res.status(401).json({error})
     }
@@ -29,8 +29,10 @@ const fetchCart= async(req, res)=>{
 const addProduct = async(req, res)=>{
     
     const {productId, quantity} = req.body;
-    const cart = await Cart.findOne({});    // await new cart({}).save();
-    const pExist=  cart.products.some(pdoc=> productId === pdoc.product.toString() )
+    console.log(productId, quantity)
+    const cart = await Cart.findOne({});
+    console.log(cart)    // await new cart({}).save();
+    const pExist=  cart.products.some(pdoc=> productId === pdoc.product)
     if(pExist){
         await Cart.findOneAndUpdate(
             {_id:cart._id,"products.product":productId},

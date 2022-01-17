@@ -90,6 +90,10 @@ const Product =({product})=>{
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
           </div>
+          <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+          <span className=".text-md tracking-tight text-gray-900 p-3">Quantity</span>
+          <input type="Number" onChange={quantityHandler}  defaultValue ="1" className=".text-md tracking-tight text-gray-900  ml-3 p-3" />
+          </div>
         <div className="w-100">
         <button onClick={addProduct}
               type="submit"
