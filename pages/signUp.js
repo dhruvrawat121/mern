@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch,useSelector } from "react-redux";
 
 
 
@@ -21,6 +22,8 @@ const SignUp =()=>{
   const router = useRouter();
 
   const [validated, setValidated] = useState(false);
+
+  const dispatch = useDispatch();
 
 // All the Event Handlers
 

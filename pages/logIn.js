@@ -55,7 +55,7 @@ const LogIn =()=>{
             const res2 = await res.json();
             console.log(res2)
             if(res2){
-                dispatch(LogInMessage());
+               ()=> dispatch({ type: 'LOGIN_SUCCESSFUL'});
             }
             if(res2.error){
 
