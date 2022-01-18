@@ -4,13 +4,26 @@ const initialState={};
 const messageReducer=(state =initialState, action)=>{
 
     switch(action.type){
-        case "SET_MESSAGE":
+        case "LOGIN_SUCCESSFUL":
             return{
-                message:payload,
+                               
+                logInSuccess:action.payload,
             }
-        case "CLEAR_MESSAGE":
+
+        case "LOGIN_FAILED":
             return{
-                message:""
+                
+                logInFailed:action.payload,
+            }
+        case "SIGNUP_SUCCESSFUL":
+            return{
+                
+                signUpSuccess:action.payload
+            }
+        case "SIGNUP_FAILED":
+            return{
+                
+                signUpFailed:action.payload
             }
         default:
             return state;

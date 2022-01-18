@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 const Navbar=()=>{
     const {token} = parseCookies();
     const isLogged = useSelector(state=>state.logIn)
-    console.log(isLogged)
     let user = false;
     if(token){
         user = true

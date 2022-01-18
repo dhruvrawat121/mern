@@ -10,7 +10,7 @@ ConnectDB();
         const{email, password}=req.body;
         try{
             if(!email || !password){
-                return res.status(422).json({message:"Please enter all the desired fields before submitting"})
+                return 
             }
             // check whether the user is already sign Up or not
             const user = await User.findOne({email})

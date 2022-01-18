@@ -6,7 +6,9 @@ import cookie from "js-cookie";
 import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector, useDispatch } from "react-redux";
-import {loggedIn} from "../redux/actions/index"
+import {logIn} from "../redux/actions/login";
+import { logInFailMessage } from "../redux/actions/message";
+import { LogInMessage } from "../redux/actions/message";
 
 
 
@@ -18,9 +20,9 @@ const LogIn =()=>{
          // state and redux store
           const [email, setEmail]=useState('')
           const [password, setPassword]= useState("")
-          const {message} = useSelector(state=>state.message)
           const dispatch = useDispatch()
-
+          const logIn = useSelector(state=>state.logIn)
+          const message = useSelector(state=>state.message)
 
 
       // Event Handlers
@@ -48,14 +50,17 @@ const LogIn =()=>{
                 password: password
               })
             })
+            console.log(res)
 
             const res2 = await res.json();
-            if(res2.error){
-              console.log(error)
-            }else{
-              console.log(res2)
-              cookie.set('token',res.token);
+            console.log(res2)
+            if(res2){
+                dispatch(LogInMessage());
             }
+            if(res2.error){
+
+            }
+            
            
 
           }
@@ -101,13 +106,7 @@ const LogIn =()=>{
                 </a>
               </Link>
             </div>
-            {message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {message}
-                </div>
-              </div>
-            )}
+           
       </Form>
     </div>
   </div>
