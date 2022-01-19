@@ -6,7 +6,6 @@ import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch,useSelector } from "react-redux";
-import { handleLogin } from "../utils/auth";
 
 
 

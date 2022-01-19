@@ -85,7 +85,7 @@ const LogIn =()=>{
        
       </div>
       {/*LogIn form */}
-      <Form noValidate validated={validated} onClick={logInHandler}className="mt-8 space-y-6" action="#" method="POST" on={true} onSubmit={logInHandler}>
+      <Form noValidate validated={validated} onClick={logInHandler}className="mt-8 space-y-6"  method="POST" on={true} onSubmit={logInHandler}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control onChange={emailHandler} type="email" placeholder="Enter email" required/>
