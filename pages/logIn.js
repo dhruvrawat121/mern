@@ -5,10 +5,7 @@ import BaseURL from "../lib/baseUrl"
 import cookie from "js-cookie";
 import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useSelector, useDispatch } from "react-redux";
-import {logIn} from "../redux/actions/login";
-import { logInFailMessage } from "../redux/actions/message";
-import { LogInMessage } from "../redux/actions/message";
+
 
 
 
@@ -20,9 +17,9 @@ const LogIn =()=>{
          // state and redux store
           const [email, setEmail]=useState('')
           const [password, setPassword]= useState("")
-          const dispatch = useDispatch()
-          const logIn = useSelector(state=>state.logIn)
-          const message = useSelector(state=>state.message)
+          const [isloading, setIsLoading]=useState(false)
+          const [error, setError] = useState('')
+        
 
 
       // Event Handlers
@@ -42,24 +39,35 @@ const LogIn =()=>{
                   }
 
             setValidated(true);
-            const res = await fetch(`${BaseURL}/api/logIn`,{
-              method:"POST",
-              headers:{"content-Type":"application/json"},
-              body:JSON.stringify({
-                email: email,
-                password: password
+
+            try{
+              isloading(true);
+              setError('')
+              const res = await fetch(`${BaseURL}/api/logIn`,{
+                method:"POST",
+                headers:{"content-Type":"application/json"},
+                body:JSON.stringify({
+                  email: email,
+                  password: password
+                })
               })
-            })
-            console.log(res)
-
-            const res2 = await res.json();
-            console.log(res2)
-            if(res2){
-               ()=> dispatch({ type: 'LOGIN_SUCCESSFUL'});
+              const res2 = await res.json();
+              cookie.set('token', token)
+              // account page redirection
+              router.push('/accountPage')           
+             }catch(error){
+              console.log(error, setError)
             }
-            if(res2.error){
+            setIsLoading(false)
+            
 
-            }
+            // const url = `${baseUrl}/api/login`;
+            // Spread in user object, which come from user state
+            // const payload = { ...user };
+            // What's returned from the request is a token in response.data object
+            // const response = await axios.post(url, payload);
+
+           
             
            
 

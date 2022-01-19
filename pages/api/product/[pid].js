@@ -35,3 +35,8 @@ const  deleteProduct = async(req, res)=>{
     const productID= await product.findByIdAndDelete({_id:pid})
     res.status(200).json({})
 }
+// adding the product to cart
+ const addProduct = async(req, res)=>{
+     const {productId, quantity} = req.body;
+    
+ }

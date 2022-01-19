@@ -1,78 +1,94 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import BaseURL from "../lib/baseUrl"
 import { useRouter } from "next/router"; 
 import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch,useSelector } from "react-redux";
+import { handleLogin } from "../utils/auth";
 
 
 
 
 
 
-
-const SignUp =()=>{
-
-  // states
-  const [name,setName]= useState('')
-  const [password,setPassword]= useState('')
-  const [email,setEmail]= useState('')
-  const router = useRouter();
-
-  const [validated, setValidated] = useState(false);
-
-  const dispatch = useDispatch();
-
-// All the Event Handlers
-
-  const nameHandler=(e)=>{
-    setName(e.target.value)
-  }
-  // Email Handler
-  const emailHandler=(e)=>{
-    setEmail(e.target.value)
-  }
-
-  // password handler
-  const passwordHandler=(e)=>{
-    setPassword(e.target.value)
-  }
-  // submit Handler
-  const submitHandler=async(e)=>{
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    setValidated(true);
+function SignUp(){
+  // const INITIAL_USER={
+  //   name='',
+  //   email='',
+  //   password='',
+  // };
   
-    const res = await fetch(`${BaseURL}/api/signUp`,{
-      method:"POST",
-      headers:{
-        "content-Type": "application/json"
-      },
-      body:JSON.stringify({
-         email,
-         password,
-         name
 
-      })
-    })
+            // states
+            const [user,setUser]= useState('')
+            const [name,setName]= useState('');
+            const [password,setPassword]= useState('');
+            const [email,setEmail]= useState('');
+            const [error, seterror]= useState('')
+            const [loading, setloading]= useState(false)
+            const [disabled,setDisabled]= useState(true)
+            const router = useRouter();
+
+            const [validated, setValidated] = useState(false);
+
+          useEffect(()=>{
+            const isUser = Object.values(user).every((el)=>Boolean(el));
+            isUser ? setDisabled(false): setDisabled(true)
+          },[user])
+          // All the Event Handlers
+
+            const nameHandler=(e)=>{
+              setName(e.target.value)
+            }
+            // Email Handler
+            const emailHandler=(e)=>{
+              setEmail(e.target.value)
+            }
+
+            // password handler
+            const passwordHandler=(e)=>{
+              setPassword(e.target.value)
+            }
+            // submit Handler
+            const submitHandler=async(e)=>{
+              const form = e.currentTarget;
+              if (form.checkValidity() === false) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+
+              setValidated(true);
+            try{
+              setloading(true);
+              seterror('')
+              // make request to signup user
+              // const url = `${baseUrl}/api/signup`
+              // Spread in the user data coming from user state
+              // const payload = { ...user }
+              // What's returned from the request is a token in response.data object
+              // const response = await axios.post(url, payload)
+              const res = await fetch(`${BaseURL}/api/signUp`,{
+                method:"POST",
+                headers:{
+                  "content-Type": "application/json"
+                },
+                body:JSON.stringify({
+                  email,
+                  password,
+                  name
+
+                })
+              })
+              const res2= await res.json()
+              handleLogin(res2)
+
+            }catch(error){
+              console.log(error)
+            }
+            setloading(false)
     
-    const res2 = await res.json()
-    console.log(res2)
-    if(res2.error){
-      <Alert variant="danger">{res2.message}</Alert>
-    }else{
-      <Alert variant="success">Success</Alert>
-
-    }
-    
-   
-
   }
     return(
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

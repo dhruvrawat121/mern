@@ -1,15 +1,10 @@
 import Link from "next/link"
+import { useState } from "react";
 import { parseCookies } from "nookies";
 import { useSelector } from "react-redux";
+import cookie from 'js-cookie'
 const Navbar=()=>{
-    const {token} = parseCookies();
-    const isLogged = useSelector(state=>state.logIn)
-    let user = false;
-    if(token){
-        user = true
-    }else{
-        user = false
-    }
+   
     return(
         <div className="text-xl text-gray-100 bg-gray-800 min-w-full min-h-full">
             <div className="flex justify-between">
@@ -19,7 +14,7 @@ const Navbar=()=>{
                     <li className="p-3"><Link href="/signUp"><a>New User? Sign Up</a></Link></li>
                     <li className="p-3"><Link href="/cart">Cart</Link></li>
                     <li className="p-3"><Link href="/newProduct">Create Product</Link></li>
-                    {isLogged ?<li className="p-3"><Link href="/logOut">LogOut</Link></li>:""}
+                    <li className="p-3"><button onClick={handleLogOut}></button></li>
                 </ul>
 
             </div>

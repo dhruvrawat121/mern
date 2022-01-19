@@ -1,5 +1,6 @@
 import Cart from "../../models/cart";
 import ConnectDB from "../../lib/mongodb"
+import { ObjectId } from "mongodb";
 
 ConnectDB();
 
@@ -16,11 +17,22 @@ export default async(req, res)=>{
 }
 // fetching contents of cart
 const fetchCart= async(req, res)=>{
+
+    if(!('authorization' in req.headers)){
+        return res.send(401).send("no authorization token")
+    }
     try{
-        const cart = await Cart.findOne({}).populate("products.product")
-        res.status(200).json({})
+        const {userId} = jwt.verfiy(
+            req.headers.authorization,
+            process.env.JWT_SECRET
+        );
+        const cart = await Cart.findOne({user:userId}).populate({
+            path:'products.product',
+            model:"product"
+        })
+        res.status(200).json(cart.products)
     }catch(error){
-        return res.status(401).json({error})
+        return res.status(403).send('Please logIn again')
     }
 }
 
@@ -28,25 +40,38 @@ const fetchCart= async(req, res)=>{
 
 const addProduct = async(req, res)=>{
     
-    const {productId, quantity} = req.body;
-    console.log(productId, quantity)
-    const cart = await Cart.findOne({});
-    console.log(cart)    // await new cart({}).save();
-    const pExist=  cart.products.some(pdoc=> productId === pdoc.product)
-    if(pExist){
-        await Cart.findOneAndUpdate(
-            {_id:cart._id,"products.product":productId},
-            {$inc:{"products.$.quantity": quantity}}
-        )
-    }else{
-        const newProduct = {quantity, product:productId}
-        await Cart.findOneAndUpdate(
-            {_id:cart._id},
-            {$push:{products:newProduct}}
-        )
-    }
-    res.status(200).json({message:'product added successfully'})
-      }
+        const {productId, quantity} = req.body;
+
+        if(!('authorization' in req.headers)){
+            return res.status(401).send("No authorization token found")
+        }
+
+        try{
+            const cart = await Cart.findOne({user:userId});
+            // to check if product already exists
+            // Use mongoose's ObjectId() method to convert string productId to objectIds
+
+            const pExist=  cart.products.some(pdoc=>ObjectId (productId) === pdoc.product)
+            if(pExist){
+                    await Cart.findOneAndUpdate(
+                        {_id:cart._id,"products.product":productId},
+                        {$inc:{"products.$.quantity": quantity}}
+                        )
+                    }else{
+                        const newProduct = {quantity, product:productId};
+                        await Cart.findOneAndUpdate(
+                            {_id:cart._id},
+                            {$push:{products:newProduct}}
+                        )
+                    }
+                    res.status(200).send("Added to cart")
+            }catch(error){
+                    console.error(error);
+                    res.status(403).send('Please logIn again')
+            }
+    
+      
+}
 
     // //   removing product from cart
 

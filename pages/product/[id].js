@@ -1,21 +1,28 @@
 import Link from "next/link"
 import { useRouter } from 'next/router'
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import BaseURL from "../../lib/baseUrl"
+import cookie from 'js-cookie'
 
 
 
 const Product =({product})=>{
 
-  const [quantity, setQuantity]= useState(1)
-    const router = useRouter()
+      const [quantity, setQuantity]= useState(1);
+      const [loading, setLoading]=useState(false)
+      const [success, setSuccess]= useState(false)
+      const router = useRouter()
 
-    if(router.isFallback){
-        return(
-             <div><h1>...is loading. </h1></div>
-              )
+    useEffect(()=>{
+      let timeOut;
+      if(success){
+        timeOut = setTimeout(()=>setSuccess(false),3000)
+      }
+      return()=>{
+        clearTimeout(timeOut)
+      }
+    },[success])
 
-    }
     // quantity Handlers
     const quantityHandler=(e)=>{
       setQuantity(e.target.value)
@@ -33,21 +40,30 @@ const Product =({product})=>{
     // add to cart handler
 
     const addProduct=async()=>{
-       const res= await fetch(`${BaseURL}/api/cart`,{
-         method:"PUT",
-         headers:{
-            "Content-Type":"application/json"
-          },
-         body:JSON.stringify({
-            productId:product._id,
-            quantity:quantity
 
-           })
-           })
-           const res2 = await res.json();
-           setQuantity("")
-    
+      try{
+        setLoading(true);
+        const res= await fetch(`${BaseURL}/api/cart`,{
+          method:"PUT",
+          headers:{
+             "Content-Type":"application/json"
+           },
+          body:JSON.stringify({
+             productId:product._id,
+             quantity:quantity
+ 
+            })
+            })
+            const res2 = await res.json();
+            setSuccess(true);
+            
+       }catch(error){
+         catchErrors(error,window.alert)
+       }
+       setLoading(false);
+
       }
+     
     
    
     return(
