@@ -44,7 +44,7 @@ export default async(req, res)=>{
                     expiresIn:'7d'
                 });
                 // sending the token
-                res.status(201).json(token)
+                res.status(201).json("token",token)
 
         }catch(err){
         console.log(err)

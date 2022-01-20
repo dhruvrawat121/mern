@@ -7,7 +7,7 @@ import allReducers from "./reducers";
       const composeEnhancers =
       (typeof window !== 'undefined' &&
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-      compose;
+        compose;
 
       const initStore =()=>createStore(allReducers, composeEnhancers(applyMiddleware(thunk)))
 

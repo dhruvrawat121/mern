@@ -81,12 +81,12 @@ function SignUp(){
                 })
               })
               const res2= await res.json()
-              handleLogin(res2)
+              router.redirect('/logIn')
 
-            }catch(error){
-              console.log(error)
-            }
-            setloading(false)
+                }catch(error){
+                  console.log(error)
+                }
+                setloading(false)
     
   }
     return(

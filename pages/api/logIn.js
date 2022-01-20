@@ -9,6 +9,7 @@ ConnectDB();
  export default async(req,res)=>{
 
         const{email, password}=req.body;
+        console.log(email, password)
 
 
         try{
@@ -30,7 +31,7 @@ ConnectDB();
                         {expiresIn: "1d"}
                )
             //    Sending the token to the client
-               res.status(201).json(token)  
+               res.status(201).json("token",token)  
             }else{
                return res.status(401).send('Either email or password don\'t match')
 

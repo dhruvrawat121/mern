@@ -5,6 +5,7 @@ import BaseURL from "../lib/baseUrl"
 import cookie from "js-cookie";
 import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch,useSelector } from "react-redux";
 
 
 
@@ -17,10 +18,8 @@ const LogIn =()=>{
          // state and redux store
           const [email, setEmail]=useState('')
           const [password, setPassword]= useState("")
-          const [isloading, setIsLoading]=useState(false)
           const [error, setError] = useState('')
         
-
 
       // Event Handlers
           const emailHandler=(e)=>{
@@ -41,24 +40,21 @@ const LogIn =()=>{
             setValidated(true);
 
             try{
-              isloading(true);
-              setError('')
               const res = await fetch(`${BaseURL}/api/logIn`,{
                 method:"POST",
                 headers:{"content-Type":"application/json"},
                 body:JSON.stringify({
                   email: email,
                   password: password
-                })
-              })
-              const res2 = await res.json();
-              cookie.set('token', token)
-              // account page redirection
-              router.push('/accountPage')           
-             }catch(error){
-              console.log(error, setError)
-            }
-            setIsLoading(false)
+                  })
+                  })
+                const res2 = await res.json();
+                cookie.set(token)
+                  // account page redirection
+                  router.push('/accountPage')           
+                }catch(error){
+                  console.log(error, setError)
+                }
             
 
             // const url = `${baseUrl}/api/login`;
@@ -85,8 +81,8 @@ const LogIn =()=>{
        
       </div>
       {/*LogIn form */}
-      <Form noValidate validated={validated} onClick={logInHandler}className="mt-8 space-y-6"  method="POST" on={true} onSubmit={logInHandler}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form noValidate validated={validated} onClick={logInHandler}className="mt-8 space-y-6"  method="POST"  onSubmit={logInHandler}>
+        <Form.Group className="mb-3">
             <Form.Label>Email address</Form.Label>
             <Form.Control onChange={emailHandler} type="email" placeholder="Enter email" required/>
             <Form.Text className="text-muted">
@@ -97,7 +93,7 @@ const LogIn =()=>{
               Please enter your email address.
             </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control onChange={passwordHandler} type="password" placeholder="Password" required/>
                 <Form.Control.Feedback type="invalid">

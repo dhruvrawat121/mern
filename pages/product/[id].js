@@ -58,7 +58,7 @@ const Product =({product})=>{
             setSuccess(true);
             
        }catch(error){
-         catchErrors(error,window.alert)
+         console.log(error,window.alert)
        }
        setLoading(false);
 
