@@ -1,6 +1,5 @@
 const initState ={
     products:[],
-    isLoading:true
 }
 
 const productsReducer =(state=initState, action)=>{
@@ -8,12 +7,15 @@ const productsReducer =(state=initState, action)=>{
         case "FETCH_PRODUCTS":
             return{...state,
                    products:action.payload.Products,
-                   isLoading:false
                   };
-        case "IS_LOADING":
+        case "FETCH_PRODUCTS_ERROR":
+            return{
+                error:action.payload.error
+            }
+        case "CLEAR_ERROR":
             return{
                 ...state,
-                isLoading:true
+                error:null
             }
         default:
             return {...state}

@@ -21,13 +21,30 @@ export default async(req, res)=>{
 
 
 
-// getting product detail
+            // getting product detail
 
-const  getProduct=async(req, res)=>{
-const {pid} = req.query;
-const productID = await product.findOne({_id:pid})
-res.status(200).json(productID)
-}
+           
+            const  getProduct=async(req, res)=>{
+                try{
+                    const {pid} = req.query;
+                    const productID = await product.findOne({_id:pid})
+
+                    if(productID){
+                        
+                        res.status(200).json(productID)
+
+                    }else{
+                        res.status(404).json({message:"Invalid Room ID"})
+                        return
+                    }
+                }catch(error){
+                    console.error(error);
+                    res.status(500).json({message:"Internal server Error"})
+
+                }
+            
+                }
+         
 // deleting the product
 
 const  deleteProduct = async(req, res)=>{
