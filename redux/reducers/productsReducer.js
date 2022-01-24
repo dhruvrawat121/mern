@@ -2,7 +2,7 @@ const initState ={
     products:[],
 }
 
-const productsReducer =(state=initState, action)=>{
+export const productsReducer =(state=initState, action)=>{
     switch(action.type){
         case "FETCH_PRODUCTS":
             return{...state,
@@ -22,4 +22,3 @@ const productsReducer =(state=initState, action)=>{
     }
 }
 
-export default productsReducer;

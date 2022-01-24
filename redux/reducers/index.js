@@ -1,15 +1,12 @@
 import { combineReducers } from "redux";
-import logInReducer from "./logInReducer";
-import messageReducer from "./messageReducer";
-import productsReducer from "./productsReducer";
+import {productsReducer} from "./productsReducer";
 import productDetailReducer from "./productDetailReducer";
-
+import { SignUpReducer } from "./signUpReducer";
 
 const  allReducers = combineReducers({
-    logIn: logInReducer,
-    message: messageReducer,
     products:productsReducer,
     productDetail:productDetailReducer,
+    signUpUser:SignUpReducer,
 })
 
 

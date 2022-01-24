@@ -7,11 +7,11 @@ import BaseURL from "../../lib/baseUrl"
 export const productAction =(req)=>async(dispatch)=>{
 
     try{
-        const response=await axios.get(`${BaseURL}/api/products`)
+        const products=await axios.get(`${BaseURL}/api/products`)
         dispatch({
             type:"FETCH_PRODUCTS",
             payload:{
-                Products:response.data,
+                Products:products.data,
             }
         })
 
@@ -27,7 +27,7 @@ export const productAction =(req)=>async(dispatch)=>{
 
 // clear errors
 
-export const clearErros =()=>(dispatch)=>{
+export const clearErrors =()=>(dispatch)=>{
     dispatch({
         type:"CLEAR_ERROR",
     })

@@ -10,10 +10,16 @@ const productDetailReducer = (state=initState,action)=>{
             return{
                 ...state,
                 productDetail:action.payload.productDetail,
-                isLoading:false
             }
-     
-
+        case "PRODUCT_DETAIL_ERROR":
+            return{
+                error:action.payload.error
+            }
+        case "CLEAR_ERRORS":
+            return{
+                ...state,
+                error:null
+            }
         default:
             return{
                 ...state

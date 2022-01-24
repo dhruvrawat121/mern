@@ -1,10 +1,13 @@
 import Link from "next/link"
+import Head from 'next/head'
+
 import { useRouter } from 'next/router'
 import {useState, useEffect} from "react"
 import BaseURL from "../../lib/baseUrl"
 import cookie from 'js-cookie';
 import { useSelector } from "react-redux";
-
+import {ProductDetail} from "../../redux/actions/productDetailAction"
+import {wrapper} from "../../redux/store"
 
 
 const Product =({product})=>{
@@ -75,6 +78,9 @@ const Product =({product})=>{
    
     return(
       <div className="bg-white">
+        <Head>
+          <title>{productDetail.name}</title>
+        </Head>
       <div className="pt-6">
         <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
           <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
@@ -120,7 +126,7 @@ const Product =({product})=>{
         <div className="w-100">
         <button onClick={addProduct}
               type="submit"
-              className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
               >
               Add to bag
           </button>
@@ -141,24 +147,9 @@ const Product =({product})=>{
 }
 
 
-// export async function getStaticProps({params:{id}}) {
-//     const res = await fetch(`${BaseURL}/api/product/${id}`)
-//     const data = await res.json()
-//     return {
-//       props: {
-//           product:data
-//       }, // will be passed to the page component as props
-//     }
-//   }
-//   export async function getStaticPaths() {
-//     return {
-//       paths: [
-//         { params: { id: "61d98333937fae42aba5b64f"} } // See the "paths" section below
-//       ],
-//       fallback: true, // See the "fallback" section below
-//     };
-//   }
-
-
    export default Product;
+// server side rendering 
 
+  export  const getServerSideProps = wrapper.getServerSideProps((store)=>async({req,params})=>{
+       await store.dispatch(ProductDetail(req,params.id))
+   })
