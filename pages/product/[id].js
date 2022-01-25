@@ -4,34 +4,30 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import {useState, useEffect} from "react"
 import BaseURL from "../../lib/baseUrl"
-import cookie from 'js-cookie';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {ProductDetail} from "../../redux/actions/productDetailAction"
-import {wrapper} from "../../redux/store"
-
+import {wrapper} from "../../redux/store";
+import {AddToCartAction} from "../../redux/actions/cartAction"
+import { toast } from "react-toastify"
+import { loadUser } from "../../redux/actions/signUpAction"
+import { AddToCartReducer } from "../../redux/reducers/cartReducer"
 
 const Product =({product})=>{
 
   // fetching data from the product detail store
 
     var {productDetail} = useSelector(state=>state.productDetail);
+    const {success} = useSelector(state=>state.Cart)
+    
 
-
+   
       
       const [quantity, setQuantity]= useState(1);
-      const [loading, setLoading]=useState(false)
-      const [success, setSuccess]= useState(false)
       const router = useRouter()
+      const dispatch = useDispatch()
 
-    useEffect(()=>{
-      let timeOut;
-      if(success){
-        timeOut = setTimeout(()=>setSuccess(false),3000)
-      }
-      return()=>{
-        clearTimeout(timeOut)
-      }
-    },[success])
+
+     
 
     // quantity Handlers
     const quantityHandler=(e)=>{
@@ -52,28 +48,38 @@ const Product =({product})=>{
     const addProduct=async()=>{
 
       try{
-        setLoading(true);
-        const res= await fetch(`${BaseURL}/api/cart`,{
-          method:"PUT",
-          headers:{
-             "Content-Type":"application/json"
-           },
-          body:JSON.stringify({
-             productId:product._id,
-             quantity:quantity
+        // setLoading(true);
+        // const res= await fetch(`${BaseURL}/api/cart`,{
+        //   method:"PUT",
+        //   headers:{
+        //      "Content-Type":"application/json"
+        //    },
+        //   body:JSON.stringify({
+        //      productId:product._id,
+        //      quantity:quantity
  
-            })
-            })
-            const res2 = await res.json();
-            setSuccess(true);
-            
+        //     })
+        //     })
+        //     const res2 = await res.json();
+        //     setSuccess(true);
+            const data = {productId:productDetail._id, quantity}
+            dispatch(AddToCartAction(data))
+
        }catch(error){
          console.log(error,window.alert)
        }
-       setLoading(false);
 
       }
-     
+      useEffect(()=>{
+        if(success){
+          toast.success("Product added Successfully")
+          setInterval(()=>{
+            setInterval(
+              ()=>{window.location.href ="/"},2000
+            )
+          })
+        }
+      },[dispatch,success])
     
    
     return(
@@ -153,3 +159,4 @@ const Product =({product})=>{
   export  const getServerSideProps = wrapper.getServerSideProps((store)=>async({req,params})=>{
        await store.dispatch(ProductDetail(req,params.id))
    })
+ 

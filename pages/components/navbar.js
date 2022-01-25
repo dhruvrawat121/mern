@@ -7,6 +7,8 @@ import { signOut } from "next-auth/react";
 import { toast,ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
+import { fetchCartInfo } from "../../redux/actions/cartAction";
+import { disconnect } from "mongoose";
 
 
 
@@ -17,6 +19,10 @@ const Navbar=()=>{
 
     useEffect(()=>{
         dispatch(loadUser())
+    }, [dispatch])
+
+    useEffect(()=>{
+        dispatch(fetchCartInfo())
     },[dispatch])
 
     const {user, loading} =useSelector(state=>state.signUpUser)
@@ -24,6 +30,7 @@ const Navbar=()=>{
     
     const logOutHandler=()=>{
         toast.success("LoggedOut Successfully")
+
         setInterval(()=>{
             signOut();
             router.push("/")
@@ -34,7 +41,7 @@ const Navbar=()=>{
             <div className="flex justify-between">
                 <h1 className="m-2 p-3"><Link href="/"><a>Logo</a></Link></h1>
                 <ul className="flex justify-around  md:min-w-max xl:w-6/12 m-2">
-                   {user ?<>
+                   {user&& !loading?<>
                     <li className="p-3"><Link href="/cart">Cart</Link></li>
                     <li className="p-3"><Link href="/newProduct">Create Product</Link></li>
                     <li className="p-3"><Link href="/accountPage"><a>Welcome {user.name}</a></Link></li>

@@ -35,7 +35,8 @@ export default NextAuth({
                 throw new Error("you have either entered wrong email or password")
             }
             return Promise.resolve(user)
-           }
+        
+        }
        })
     ],
      callbacks:{
@@ -43,7 +44,8 @@ export default NextAuth({
              user&& (token.user = user)
              return Promise.resolve(token)
          },
-         session: async({session,  token})=>{
+         session: async({session, token})=>{
+            
             session.user = token.user
             return Promise.resolve(session)
         },

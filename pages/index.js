@@ -21,6 +21,8 @@ import { useEffect } from 'react';
 
   const dispatch= useDispatch();
 
+
+
         
     
 // Extracting data from store
@@ -78,6 +80,6 @@ import { useEffect } from 'react';
 export default Home;
 
 // server side rendering
-export const getServerSideProps= wrapper.getServerSideProps((store)=>async({req})=>{
+export const getStaticProps= wrapper.getStaticProps((store)=>async({req})=>{
   await store.dispatch(productAction(req))
 })

@@ -1,30 +1,35 @@
-import BaseURL from "../lib/baseUrl";
+
 import {useEffect, useState} from "react"
-
-import axios from 'axios';
-import { parseCookies } from "nookies";
-import calculateCartTotal from "../utils/cartTotal"
+import {calculateCartTotal} from "../utils/cartTotal"
 
 
-const cart =({products})=>{
+import { useSelector } from "react-redux";
 
-    const [isCartEmpty, setisCartEmpty]= useState(false);
-    const [cartAmount, isCartAmount] = useState(0)
 
-    useEffect(()=>{
-        const {cartTotal, stripeTotal} = calculateCartTotal(products)
-    },[products])
+const cart =()=>{
+    // extracting data from states
+    const {cartItems} = useSelector(state=>state.Cart)
+
+    // const [isCartEmpty, setisCartEmpty]= useState(false);
+    // const [cartAmount, isCartAmount] = useState(0)
+
+    // useEffect(()=>{
+    //     const {cartTotal, stripeTotal} = calculateCartTotal(cartItems)
+    // },[cartItems])
+
             return(
                 
                     <div className="mt-8">
+
+
                             <div className="flow-root">
                                 <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                {products.map((product) => (
-                                    <li key={product.id} className="py-6 flex">
+                                {cartItems.map((c) => (
+                                    <li key={c.product.id} className="py-6 flex">
                                     <div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                                         <img
-                                        src={product.imageSrc}
-                                        alt={product.imageAlt}
+                                        src={c.product.img}
+                                        alt={c.product.img}
                                         className="w-full h-full object-center object-cover"
                                         />
                                     </div>
@@ -33,14 +38,13 @@ const cart =({products})=>{
                                         <div>
                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                             <h3>
-                                            <a href={product.href}>{product.name}</a>
+                                            {c.product.name}
                                             </h3>
-                                            <p className="ml-4">{product.price}</p>
+                                            <p className="ml-4">{c.product.price}</p>
                                         </div>
-                                        <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                         </div>
                                         <div className="flex-1 flex items-end justify-between text-sm">
-                                        <p className="text-gray-500">Qty {product.quantity}</p>
+                                        <p className="text-gray-500">Qty {c.quantity}</p>
 
                                         <div className="flex">
                                             <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
@@ -55,7 +59,7 @@ const cart =({products})=>{
                             </div>
                         
 
-                            <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
+                            {/* <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                 <p>Subtotal</p>
                                 <p>{cartAmount}</p>
@@ -69,33 +73,13 @@ const cart =({products})=>{
                                     Checkout
                                 </a>
                                 </div>        
-                            </div>
+                            </div> */}
                 </div>
             )
     
 }
 
-                    export async function getServerSideProps(ctx){
-                        const {token} = parseCookies(ctx);
-                        // check if user authenticated
-                        if(!token){
-                            return{props:{products:[]}}
-                        }
-                        try{
-                            const url = `${BaseURL}/api/cart`;
-                            const payload = {headers:{authorization:token}};
-                            const response = await axios.get(url, payload)
-                            const res2= response.data;
-                            const products = await res2.json();
-                            return{
-                                   props: {products}
-                                }
-                        }catch(error){
-                            console.log(error);
-                        }
-                        
-                        
-                    }
+                   
 
 
 

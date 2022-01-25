@@ -1,5 +1,5 @@
 // for sum of cart
-function calculateCartTotal(products){
+function calculateCartTotal(cartItems){
     const total = products.reduce((previousValue, currentValue)=>{
        previousValue +=currentValue.product.price * currentValue.product.quantity;
        return previousValue;

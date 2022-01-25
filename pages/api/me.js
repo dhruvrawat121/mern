@@ -5,6 +5,7 @@ import ConnectDB from "../../lib/mongodb"
 ConnectDB();
  const currentUserProfile=async(req, res)=> {
     const session = await getSession({req})
+    // console.log("req.user",req.user)
     try{
         if(!session){
               res.send("You need to logIn first", 402)
