@@ -1,6 +1,6 @@
 
-import {useEffect, useState} from "react"
-import {calculateCartTotal} from "../utils/cartTotal"
+import {useEffect, useState} from "react";
+import calculateCartTotal from "../utils/cartTotal"
 
 
 import { useSelector } from "react-redux";
@@ -10,12 +10,15 @@ const cart =()=>{
     // extracting data from states
     const {cartItems} = useSelector(state=>state.Cart)
 
-    // const [isCartEmpty, setisCartEmpty]= useState(false);
-    // const [cartAmount, isCartAmount] = useState(0)
+    const [cartAmount, setCartAmount] = useState(0)
 
-    // useEffect(()=>{
-    //     const {cartTotal, stripeTotal} = calculateCartTotal(cartItems)
-    // },[cartItems])
+    useEffect(()=>{
+        const {cartTotal} = calculateCartTotal(cartItems)
+        setCartAmount(cartTotal)
+    },[cartItems])
+
+       
+      
 
             return(
                 
@@ -59,7 +62,7 @@ const cart =()=>{
                             </div>
                         
 
-                            {/* <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
+                            <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                 <p>Subtotal</p>
                                 <p>{cartAmount}</p>
@@ -73,7 +76,7 @@ const cart =()=>{
                                     Checkout
                                 </a>
                                 </div>        
-                            </div> */}
+                            </div>
                 </div>
             )
     
