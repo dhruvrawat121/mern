@@ -19,6 +19,10 @@ export default async(req, res)=>{
          case "PUT":
          await addProduct(req, res)
          break;
+         case "DELETE":
+         await removeProduct(req,res)
+         break;
+
         
     }
 
@@ -82,21 +86,22 @@ export default async(req, res)=>{
         }
 
 
-    // //   removing product from cart
+    //   removing product from cart
 
-    // const removeProduct = async(req,res)=>{
-    //     const {productId} = req.query;
-    //     try{
-    //         const cart = await Cart.findOne({})
-    //         await Cart.findOneAndUpdate(
-    //             {_id:cart._id},{$pull:{products:{product:productId}}},
-    //             {new:true}
-    //             ).populate("products.product")
-    //             res.status(200).json({message:"removed from cart"})
-    //     }catch(error){
-    //         console.log(error);
-    //         res.status(403).send("something bad happened")
-    //     }
+    const removeProduct = async(req,res)=>{
+        const {productId} = req.query;
+        console.log(productId)
+        try{
+            const cart = await Cart.findOne({})
+            await Cart.findOneAndUpdate(
+                {_id:cart._id},{$pull:{products:{product:productId}}},
+                {new:true}
+                ).populate("products.product")
+                res.status(200).json(cart.products,{success:true})
+        }catch(error){
+            console.log(error);
+            res.status(403).send("something bad happened")
+        }
 
        
-    // }
+    }

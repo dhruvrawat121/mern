@@ -1,3 +1,4 @@
+import { data } from "autoprefixer"
 import axios from "axios"
  import BaseURL from "../../lib/baseUrl"
 
@@ -57,4 +58,29 @@ try{
         payload:error
     })
 }
+}
+
+// deleting product from cart
+
+export const deleteCartItem = (data)=>async(dispatch)=>{
+    try{
+        dispatch({type:"DELETE_ITEM_REQUEST"})
+        const config ={
+            headers:{
+                "content-type":"application/json"
+            }
+        }
+        const response = await axios.delete(`${BaseURL}/api/cart`,data,config)
+        console.log(response)
+        dispatch({
+            type:"DELETE_ITEM_SUCCESS",
+            payload: response.data
+        })
+
+    }catch(error){
+        dispatch({
+            type:"DELETE_ITEM_FAIL",
+            payload:error
+        })
+    }    
 }

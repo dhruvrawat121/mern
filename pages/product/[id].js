@@ -48,20 +48,7 @@ const Product =({product})=>{
     const addProduct=async()=>{
 
       try{
-        // setLoading(true);
-        // const res= await fetch(`${BaseURL}/api/cart`,{
-        //   method:"PUT",
-        //   headers:{
-        //      "Content-Type":"application/json"
-        //    },
-        //   body:JSON.stringify({
-        //      productId:product._id,
-        //      quantity:quantity
- 
-        //     })
-        //     })
-        //     const res2 = await res.json();
-        //     setSuccess(true);
+        
             const data = {productId:productDetail._id, quantity}
             dispatch(AddToCartAction(data))
 

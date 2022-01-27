@@ -1,23 +1,30 @@
 
 import {useEffect, useState} from "react";
 import calculateCartTotal from "../utils/cartTotal"
+import { deleteCartItem } from "../redux/actions/cartAction";
+import { useRouter } from "next/router";
 
-
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 
 const cart =()=>{
     // extracting data from states
     const {cartItems} = useSelector(state=>state.Cart)
-
     const [cartAmount, setCartAmount] = useState(0)
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const removeHandler=(productId)=>{
+        const data = {productId:productId}
+        dispatch(deleteCartItem(data))
+        
+    } 
 
     useEffect(()=>{
         const {cartTotal} = calculateCartTotal(cartItems)
         setCartAmount(cartTotal)
     },[cartItems])
 
-       
+         
       
 
             return(
@@ -28,7 +35,7 @@ const cart =()=>{
                             <div className="flow-root">
                                 <ul role="list" className="-my-6 divide-y divide-gray-200">
                                 {cartItems.map((c) => (
-                                    <li key={c.product.id} className="py-6 flex">
+                                    <li key={c.product._id} className="py-6 flex">
                                     <div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                                         <img
                                         src={c.product.img}
@@ -50,7 +57,7 @@ const cart =()=>{
                                         <p className="text-gray-500">Qty {c.quantity}</p>
 
                                         <div className="flex">
-                                            <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                            <button onClick={()=>removeHandler(c.product._id)} type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                             Remove
                                             </button>
                                         </div>
