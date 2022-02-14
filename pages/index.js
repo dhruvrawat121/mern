@@ -48,7 +48,7 @@ import { useEffect } from 'react';
      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
        <h1 className='text-gray-800 font-bold text-xl '>Welcome to the E-commerce Website</h1>
        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-       {products.map((product) => (
+       {products?.map((product) => (
          <div key={product._id} className="group relative">
            <div id={product.id} className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden lg:h-80 lg:aspect-none hover:scale-105 ease-in-out duration-100">
            <Link href={'/product/[id]'} as={`/product/${product._id}`} ><a className="text-gray-900 font-medium italic "><img
