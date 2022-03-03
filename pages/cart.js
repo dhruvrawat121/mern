@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 
 
-const cart =()=>{
+const Cart =()=>{
     // extracting data from states
     const {cartItems} = useSelector(state=>state.Cart)
     const [cartAmount, setCartAmount] = useState(0)
@@ -94,5 +94,5 @@ const cart =()=>{
 
 
 
-export default cart;
+export default Cart;
 
