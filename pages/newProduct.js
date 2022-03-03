@@ -5,7 +5,7 @@ import {Form,Button,Row,Col,InputGroup,} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const newProduct =()=>{
+const NewProduct =()=>{
     const [name, setName] = useState("")
     const [img, setImg] = useState("")
     const [desc, setDesc] = useState("")
@@ -120,4 +120,4 @@ const newProduct =()=>{
     )
 }
 
-export default newProduct
+export default NewProduct
